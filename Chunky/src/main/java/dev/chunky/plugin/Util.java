@@ -121,7 +121,7 @@ final class Util {
     }
 
     static boolean spawnable(EntityType t, World w, Set<String> blocked) {
-        return t.isSpawnable() && t.getEntityClass() != null && t.isEnabledByFeature(w) && !blocked.contains(key(t));
+        return t.isSpawnable() && t.getEntityClass() != null && !blocked.contains(key(t));
     }
 
     static EntityType entity(String in, World w, Set<String> blocked, boolean livingOnly) throws CmdException {
@@ -136,14 +136,10 @@ final class Util {
         if (!spawnable(t, w, blocked)) {
             throw new CmdException("Der Typ '" + key(t) + "' kann nicht gespawnt werden.");
         }
-        if (livingEntityRequired(livingOnly) && !org.bukkit.entity.LivingEntity.class.isAssignableFrom(t.getEntityClass())) {
+        if (livingOnly && !org.bukkit.entity.LivingEntity.class.isAssignableFrom(t.getEntityClass())) {
             throw new CmdException("Der Typ '" + key(t) + "' ist keine Kreatur.");
         }
         return t;
-    }
-
-    private static boolean livingEntityRequired(boolean b) {
-        return b;
     }
 
     // ---------- Tab-Vervollständigung ----------
